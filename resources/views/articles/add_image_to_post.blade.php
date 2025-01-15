@@ -18,7 +18,9 @@
                 @csrf
                 <div class="mb-4">
                     <div>
-                        <img src="../../{{$articlesInView->image}}" class="w-[50%] mx-auto" alt="haven't image to this article">
+                        {{--вот тут поищи инфу по работе с картинками, не совсем правильно ты выводишь--}}
+                        <img src="{{ \Illuminate\Support\Facades\Storage::url($articlesInView->image) }}" class="w-[50%] mx-auto" alt="haven't image to this article">
+                        {{--<img src="../../{{$articlesInView->image}}" class="w-[50%] mx-auto" alt="haven't image to this article">--}}
                     </div>
                     <div class="my-7">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Загрузить картинку</label>

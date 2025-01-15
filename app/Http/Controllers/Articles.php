@@ -10,9 +10,24 @@ class Articles extends Controller
 {
 
     function index() {
-        $authorizedUser = Auth::user()->name;
+        //Также можно здесь или создать отдельную вьюху под свои посты, то есть посты авторизованного юзера
+        //и поработать с кешэм и жадной загрузкой
+        /*$articles = Cache::get('articles');
+        if (!$articles) {
+            $articles = Article::query()
+                ->select(['id', 'title', 'user_id', 'category_id'])
+                ->limit(6)
+                ->orderBy('id', 'DESC')
+                ->with('user')
+                ->with('category')
+                ->get();
+
+            Cache::add('article', $articles);
+        }*/
+
+        //$authorizedUser = Auth::user()->name; //необязательно во вьюхе показал как можно сделать через хелпер
         $articles = Article::get()->where('userId', Auth::id());
-        return view('index', ['articlesInView' => $articles, 'authorizedUser' => $authorizedUser]);
+        return view('index', ['articlesInView' => $articles/*, 'authorizedUser' => $authorizedUser*/]);
     }
 
 //    function show($id) {
@@ -27,6 +42,8 @@ class Articles extends Controller
     }
 
     function update(Article $article, Request $request) {
+        //Не используешь валидацию, защита есть только со стороны БД
+        //почитай про FormRequest
         $article->update([
             'article_name' => $request->input('article_name'),
             'article_description' => $request->input('article_description'),
@@ -35,7 +52,7 @@ class Articles extends Controller
     }
 
     function create() {
-        $authId = Auth::user()->id;
+        $authId = Auth::user()->id;//вообще не используется. Зачем передавал?
         return view('articles.create_post', ['authId' => $authId]);
     }
 
@@ -66,10 +83,13 @@ class Articles extends Controller
     }
 
     function upload_store(Article $article, Request $request) {
+        //неиспользуемые переменные
         $imageName = 'logo';
         $imageExtension = '.png';
-        $uploadImage = $request->image->store('uploads');
-        $article->update(['image' => $uploadImage]);
+        //$uploadImage = $request->image->store('uploads');
+        //в env файле есть настройка FILESYSTEM_DISK почитай об этом тоже
+        $img = $request->file('image')->store();
+        $article->update(['image' => $img]);
         return redirect(route('index'));
     }
 

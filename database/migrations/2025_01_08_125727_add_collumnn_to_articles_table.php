@@ -11,6 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //Если соблюдать конвенцию наименований, то ключ на юзера можно так добавить
+        //$table->foreignIdFor(User::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+        //тоже самое с категориями
+        /*$table->foreignIdFor(\App\Models\Category::class)
+            ->constrained()->cascadeOnUpdate()
+            ->cascadeOnDelete()
+            ->cascadeOnUpdate();*/
         Schema::table('articles', function (Blueprint $table) {
             $table->string('userId')->after('id');
         });

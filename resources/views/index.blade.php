@@ -3,7 +3,10 @@
     <div class="d-flex justify-content-end" style="max-height: 70px">
         <div class="d-flex align-items-stretch m-1 border-4 rounded-start p-2">
             <div class="d-flex align-items-center">
-                <h3>{{$authorizedUser}}</h3>
+                {{--<h3>{{$authorizedUser}}</h3>--}}
+                @if(auth('web')->check())
+                    <h3>{{ auth('web')->user()->name }}</h3>
+                @endif
             </div>
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
