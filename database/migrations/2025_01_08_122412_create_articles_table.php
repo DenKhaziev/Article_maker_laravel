@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->string('article_name');
-            $table->string('article_descr');
+            $table->string('article_description');
             $table->string('category_name')->nullable();
             $table->integer('views')->default(0);
             $table->boolean('status')->default(false);
