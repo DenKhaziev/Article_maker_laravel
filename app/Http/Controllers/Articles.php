@@ -83,7 +83,7 @@ class Articles extends Controller
         // 1st method
 //        $post = request()->validate([
 //            'article_name' => 'string',
-//            'article_descr' => 'string',
+//            'article_description' => 'string',
 //            'userId' => 'integer'
 //        ]);
 //        Article::create($post);
