@@ -17,6 +17,8 @@ class Categories extends Controller
         return view('categories.create_category');
     }
 
+    // git status
+
     function change(Article $article) {
 //        $articleId = Article::get()->where('id', $id)->first()->only('id'); // не передаю далее
         $categories = Category::get()->toArray();
