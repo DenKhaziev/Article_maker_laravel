@@ -36,6 +36,7 @@ class Articles extends Controller
 
     function create() {
         $authId = Auth::user()->id;
+//        SOME CODE
         return view('articles.create_post', ['authId' => $authId]);
     }
 
