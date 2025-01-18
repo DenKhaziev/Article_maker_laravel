@@ -39,6 +39,10 @@
                 </th>
 
                 <td class="px-6 py-4">
+                    @if(Auth::user->id ==)
+
+
+                    @endif
                     {{count($category->articles)}}
                 </td>
 

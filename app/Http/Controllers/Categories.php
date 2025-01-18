@@ -10,6 +10,8 @@ class Categories extends Controller
 {
     function index () {
         $categories = Category::get();
+
+//        dd($categories->articles);
         return view('categories.category_list', ['categoriesInView' => $categories]);
     }
 
@@ -35,7 +37,9 @@ class Categories extends Controller
 
         $categoryId = Category::get()->where('category_name', $request->input('category'))->first()->id;
 //        $categoryId = Article::first()->category; // корректно меняет айдишник только впервые - при каждой замене оставляет старый айди
-        $article->update(['category_name' => $request->input('category'), 'category_id' => $categoryId]);
+//        $article->update(['category_name' => $request->input('category'), 'category_id' => $categoryId]);
+        $article->update(['category_id' => $categoryId]);
+
         return redirect(route('articles_show', $article->id));
     }
 

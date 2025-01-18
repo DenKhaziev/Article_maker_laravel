@@ -3,16 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class Articles extends Controller
 {
 
-    function index() {
-        $authorizedUser = Auth::user()->name;
+    function index(Article $article) {
+//        $authorizedUser = Auth::user()->name; // сделал хелпер во вьюхе
+
+//        $articles = Cache::get('articles');
+//        if (!$articles) {
+//            $articles = Article::query()
+//                ->select(['id', 'article_name', 'userId', 'category_id'])
+//                ->limit(6)
+//                ->orderBy('id', 'DESC')
+////                ->with('user')
+//                ->with('category')
+//                ->get();
+//            Cache::add('article', $articles);
+//        }
         $articles = Article::get()->where('userId', Auth::id());
-        return view('index', ['articlesInView' => $articles, 'authorizedUser' => $authorizedUser]);
+//        dd(Article::all());
+        return view('index', ['articlesInView' => $articles, 'categoryName' => Article::all()->category->category_name]);
+//        return view('index', ['articlesInView' => $articles]);
+
     }
 
 //    function show($id) {
@@ -23,21 +40,24 @@ class Articles extends Controller
 
     function show(Article $article) {
         $article->update(['views' => ++$article->views]);
-        return view('articles.show_post',['articlesInView' => $article]);
+        return view('articles.show_post',['articlesInView' => $article, 'categoryName' => $article->category->category_name]);
+//        return view('articles.show_post',['articlesInView' => $article]);
+
     }
 
     function update(Article $article, Request $request) {
-        $article->update([
-            'article_name' => $request->input('article_name'),
-            'article_description' => $request->input('article_description'),
+        $newArticle = request()->validate([
+            'article_name' => 'string',
+            'article_description' => 'string'
         ]);
+        $article->update($newArticle);
         return redirect(route('index'));
     }
 
     function create() {
-        $authId = Auth::user()->id;
+//        $authId = Auth::user()->id;
 //        SOME CODE
-        return view('articles.create_post', ['authId' => $authId]);
+        return view('articles.create_post');
     }
 
 //    function edit($id) {
@@ -67,8 +87,6 @@ class Articles extends Controller
     }
 
     function upload_store(Article $article, Request $request) {
-        $imageName = 'logo';
-        $imageExtension = '.png';
         $uploadImage = $request->image->store('uploads');
         $article->update(['image' => $uploadImage]);
         return redirect(route('index'));

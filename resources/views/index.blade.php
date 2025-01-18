@@ -3,7 +3,10 @@
     <div class="d-flex justify-content-end" style="max-height: 70px">
         <div class="d-flex align-items-stretch m-1 border-4 rounded-start p-2">
             <div class="d-flex align-items-center">
-                <h3>{{$authorizedUser}}</h3>
+{{--                <h3>{{$authorizedUser}}</h3>--}}
+                @if(auth('web')->check())
+                    <h3>{{ auth('web')->user()->name }}</h3>
+                @endif
             </div>
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
@@ -63,9 +66,9 @@
                 {{$articles->article_description}}
             </td>
             <td class="px-6 py-4">
-                <span class="inline-block w-full bg-blue-100 text-blue-800 text-xs font-medium me-2 px-1.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 text-center">
-                {{$articles->category_name}}
-                </span>
+                    <span class="inline-block w-full bg-blue-100 text-blue-800 text-xs font-medium me-2 px-1.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 text-center">
+                    {{$categoryName}}
+                    </span>
             </td>
             <td class="px-6 py-4 text-center">
                 {{$articles->views}}
