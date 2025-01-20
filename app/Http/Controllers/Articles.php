@@ -7,11 +7,12 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Validation\Rule;
 
 class Articles extends Controller
 {
 
-    function index(Article $article) {
+    function index() {
 //        $authorizedUser = Auth::user()->name; // сделал хелпер во вьюхе
 
 //        $articles = Cache::get('articles');
@@ -25,10 +26,9 @@ class Articles extends Controller
 //                ->get();
 //            Cache::add('article', $articles);
 //        }
-        $articles = Article::get()->where('userId', Auth::id());
-//        dd(Article::all());
-        return view('index', ['articlesInView' => $articles, 'categoryName' => Article::all()->category->category_name]);
-//        return view('index', ['articlesInView' => $articles]);
+        $articles = Article::get()->where('user_id', Auth::id());
+//        return view('index', ['articlesInView' => $articles , 'categoryName' => Article::all()->first()->category->category_name]);
+        return view('index', ['articlesInView' => $articles]);
 
     }
 
@@ -107,11 +107,15 @@ class Articles extends Controller
 //        ]);
 //        Article::create($post);
 //        2nd method
-        Article::create([
-            'article_name' => $request->input('article_name'),
-            'article_description' => $request->input('article_description'),
-            'userId' => Auth::id(),
+//        dd($request->input());
+
+        $post = request()->validate([
+            'article_name' => 'required|string',
+            'article_description' => 'required|string',
         ]);
+//        dd($post);
+
+        Article::createWithUserAndCategory($post);
         return redirect(route('index'));
     }
 

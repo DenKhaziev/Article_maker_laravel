@@ -23,7 +23,7 @@ class Categories extends Controller
 
     function change(Article $article) {
 //        $articleId = Article::get()->where('id', $id)->first()->only('id'); // не передаю далее
-        $categories = Category::get()->toArray();
+        $categories = Category::all();
         return view('categories.select_category', ['articlesInView' => $article, 'categories' => $categories]);
     }
 
@@ -35,10 +35,13 @@ class Categories extends Controller
 //    }
     function change_article_category(Article $article, Request $request) {
 
-        $categoryId = Category::get()->where('category_name', $request->input('category'))->first()->id;
+        $post = request()->validate([
+            'category_id' => 'required|integer',
+        ]);
+//        $categoryId = Category::get()->where('category_name', $request->input('category'))->first()->id;
 //        $categoryId = Article::first()->category; // корректно меняет айдишник только впервые - при каждой замене оставляет старый айди
 //        $article->update(['category_name' => $request->input('category'), 'category_id' => $categoryId]);
-        $article->update(['category_id' => $categoryId]);
+        $article->update($post);
 
         return redirect(route('articles_show', $article->id));
     }

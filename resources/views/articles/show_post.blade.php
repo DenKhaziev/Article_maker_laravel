@@ -68,7 +68,7 @@
                 <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Категория</dt>
                 <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
 {{--                    @if($categoryName)--}}
-                    <span class="inline-block w-full bg-blue-100 text-blue-800 text-xs font-medium me-2 px-1.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 text-center">{{$articlesInView->category_id}}</span>
+                    <span class="inline-block w-full bg-blue-100 text-blue-800 text-xs font-medium me-2 px-1.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 text-center">{{$articlesInView->category->category_name}}</span>
 
 {{--                    @endif--}}
                 </dd>

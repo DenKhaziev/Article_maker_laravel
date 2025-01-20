@@ -67,7 +67,7 @@
             </td>
             <td class="px-6 py-4">
                     <span class="inline-block w-full bg-blue-100 text-blue-800 text-xs font-medium me-2 px-1.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 text-center">
-                    {{$categoryName}}
+                    {{$articles->category->category_name}}
                     </span>
             </td>
             <td class="px-6 py-4 text-center">
