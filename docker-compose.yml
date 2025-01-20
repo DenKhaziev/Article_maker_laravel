@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+    nginx:
+        image: nginx:latest
+        volumes:
+            - ./:/var/www
+            - ./nginx/conf.d:/etc/nginx/conf.d/
+        ports:
+            - "9090:80"
+        container_name: project_nginx
