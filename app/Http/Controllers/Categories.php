@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 class Categories extends Controller
 {
+
+
     function index () {
         $categories = Category::get();
 

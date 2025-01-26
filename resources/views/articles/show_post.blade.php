@@ -68,7 +68,13 @@
                 <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Категория</dt>
                 <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
 {{--                    @if($categoryName)--}}
-                    <span class="inline-block w-full bg-blue-100 text-blue-800 text-xs font-medium me-2 px-1.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 text-center">{{$articlesInView->category->category_name}}</span>
+                    <span class="inline-block w-full bg-blue-100 text-blue-800 text-xs font-medium me-2 px-1.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 text-center">
+                        @if($articlesInView->category->category_name ?? NULL )
+                            {{$articlesInView->category->category_name}}
+                        @else
+                            no category
+                        @endif
+                    </span>
 
 {{--                    @endif--}}
                 </dd>
@@ -100,7 +106,11 @@
             </div>
         </dl>
         <h2 class="mb-2 mt-5 text-xl font-semibold leading-none text-gray-900 md:text-2xl dark:text-white">{{$articlesInView->article_name}}</h2>
-        <img src="../{{$articlesInView->image}}" alt="this post haven't image">
+        @if(!$articlesInView->image)
+            <img src="{{url ('default_photo.jpg')}}" class="w-75" alt="avatar">
+        @else
+            <img src="{{url ('uploads/' .  $articlesInView->image)}}" class="w-75" alt="avatar">
+        @endif
         <dl class="mt-5">
             <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Полный текст</dt>
             <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">

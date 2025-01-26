@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('article_name');
             $table->string('article_description');
-//            $table->string('category_name')->nullable();
-            $table->integer('category_id')->default(1);
+            $table->integer('category_id')->nullable();
+            $table->integer('user_id')->nullable();
             $table->integer('views')->default(0);
-            $table->boolean('status')->default(false);
+            $table->boolean('status')->default(true);
             $table->string('image')->nullable();
             $table->timestamps();
         });

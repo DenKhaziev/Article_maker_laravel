@@ -23,6 +23,11 @@
     <a href="{{route('articles_create')}}" class="inline-block focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Добавить статью</a>
     <a href="{{route('categories_index')}}" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Категории</a>
 </div>
+<div class="relative overflow-x-auto w-[85%] sm:rounded-lg mx-auto mt-9">
+    <a href="" class="btn btn-secondary mr-1.5">Показать все статьи</a>
+    <a href="" class="btn btn-success">Показать только свои статьи</a>
+
+</div>
 <div class="relative overflow-x-auto shadow-md w-[85%] sm:rounded-lg mx-auto mt-9">
     <table class="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -67,7 +72,11 @@
             </td>
             <td class="px-6 py-4">
                     <span class="inline-block w-full bg-blue-100 text-blue-800 text-xs font-medium me-2 px-1.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 text-center">
-                    {{$articles->category->category_name}}
+                        @if($articles->category->category_name ?? NULL )
+                            {{$articles->category->category_name}}
+                        @else
+                            no category
+                        @endif
                     </span>
             </td>
             <td class="px-6 py-4 text-center">
@@ -89,7 +98,11 @@
             </td>
 
             <td class="px-6 py-4">
-                <img src="{{$articles->image}}" class="w-[100px]" alt="">
+                @if(!$articles->image)
+                    <img src="{{url ('default_photo.jpg')}}" class="w-[100px]" alt="avatar">
+                @else
+                    <img src="{{url ('uploads/' .  $articles->image)}}" class="w-[100px]" alt="avatar">
+                @endif
             </td>
             <td class="px-6 py-4 d-flex ">
                 <a href="{{route('articles_edit', $articles->id)}}" class="p-1" title="Редактировать">

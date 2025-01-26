@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class Articles extends Controller
@@ -14,8 +15,8 @@ class Articles extends Controller
 
     function index() {
 //        $authorizedUser = Auth::user()->name; // сделал хелпер во вьюхе
-
-//        $articles = Cache::get('articles');
+//        dd(123);
+        $articles = Cache::get('articles');
 //        if (!$articles) {
 //            $articles = Article::query()
 //                ->select(['id', 'article_name', 'userId', 'category_id'])
@@ -29,7 +30,10 @@ class Articles extends Controller
         $articles = Article::get()->where('user_id', Auth::id());
 //        return view('index', ['articlesInView' => $articles , 'categoryName' => Article::all()->first()->category->category_name]);
         return view('index', ['articlesInView' => $articles]);
-
+    }
+    function index_all_articles() {
+        $articles = Cache::get('articles');
+        return view('index', ['articlesInView' => $articles]);
     }
 
 //    function show($id) {
@@ -40,7 +44,7 @@ class Articles extends Controller
 
     function show(Article $article) {
         $article->update(['views' => ++$article->views]);
-        return view('articles.show_post',['articlesInView' => $article, 'categoryName' => $article->category->category_name]);
+        return view('articles.show_post',['articlesInView' => $article]);
 //        return view('articles.show_post',['articlesInView' => $article]);
 
     }
@@ -83,17 +87,27 @@ class Articles extends Controller
 
     function upload_image(Article $article) {
 //        $articles = Article::get()->where('id', $article->id)->first()->toArray();
+//        dd(Storage::disk('public'));
         return view('articles.add_image_to_post', ['articlesInView' => $article]);
     }
 
     function upload_store(Article $article, Request $request) {
-        $uploadImage = $request->image->store('uploads');
-        $article->update(['image' => $uploadImage]);
+        // 1st method
+//        $img = $request->file('image')->store();
+
+        //2nd method
+        if($article->image) {
+        Storage::delete($article->image);
+        }
+        $img = Storage::disk('local')->put('images', $request->file('image'));  // не видит ярлык storage в папке public, если передавать в disk name public
+        $article->update(['image' => $img]);
+
+
         return redirect(route('index'));
     }
 
     function destroy(Article $article) {
-//        Article::destroy($article->id);
+        Storage::delete(Article::get()->where('id', $article->id)->first()->image);
         $article->delete();
         return redirect(route('index'));
     }

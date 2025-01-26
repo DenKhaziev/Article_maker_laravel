@@ -18,8 +18,12 @@
                 @csrf
                 <div class="mb-4">
                     <div>
+                        @if(!$articlesInView->image)
+                            <img src="{{url ('default_photo.jpg')}}" class="" alt="avatar">
+                        @else
+                            <img src="{{url ('uploads/' .  $articlesInView->image)}}" class="" alt="avatar">
+                        @endif
 {{--                        <img src="../../{{$articlesInView->image}}" class="w-[50%] mx-auto" alt="haven't image to this article">--}}
-                        <img src="{{Storage::url($articlesInView->image) }}" class="w-[50%] mx-auto" alt="haven't image to this article">
                     </div>
                     <div class="my-7">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Загрузить картинку</label>
