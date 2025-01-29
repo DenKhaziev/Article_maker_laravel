@@ -12,6 +12,16 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    const ROLE_GUEST = 1;
+    const ROLE_ADMIN = 2;
+
+    public static function getRoles(): array
+    {
+        return [
+            self::ROLE_GUEST => 'guest',
+            self::ROLE_ADMIN => 'admin',
+        ];
+    }
     /**
      * The attributes that are mass assignable.
      *
