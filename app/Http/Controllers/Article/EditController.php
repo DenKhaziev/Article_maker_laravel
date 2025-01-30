@@ -13,12 +13,6 @@ class EditController extends Controller
      */
     public function __invoke(Article $article)
     {
-//        Gate::authorize('update', function($article, $user) {
-//            return $user->id === $article->user_id;
-//        });
-//        if(!Gate::allows('update', $article)) {
-//            abort(403);
-//        }
             return view('articles.edit', ['articlesInView' => $article]);
     }
 }

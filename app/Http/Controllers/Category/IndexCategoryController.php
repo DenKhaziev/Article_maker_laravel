@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\User;
+use App\Services\ResourceService;
 use Illuminate\Http\Request;
 
 class IndexCategoryController extends Controller
@@ -14,6 +16,9 @@ class IndexCategoryController extends Controller
     public function __invoke()
     {
         $categories = Category::get();
-        return view('categories.index', ['categoriesInView' => $categories]);
+        return view('categories.index', [
+            'categoriesInView' => $categories,
+            'isAdmin' => (new ResourceService)->isAdmin()
+        ]);
     }
 }

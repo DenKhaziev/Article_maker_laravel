@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Category\UpdateRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -11,9 +12,10 @@ class UpdateCategoryController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request, Category $category)
+    public function __invoke(UpdateRequest $updateRequest, Category $category)
     {
-        $category->update(['category_name' => $request->input('category')]);
+        $data = $updateRequest->validated();
+        $category->update($data);
         return redirect(route('categories.index'));
     }
 }

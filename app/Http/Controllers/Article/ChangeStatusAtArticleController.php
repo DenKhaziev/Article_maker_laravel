@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Article;
 
+use App\Http\Controllers\Controller;
 use App\Models\Article;
 use Illuminate\Http\Request;
 
-class StoreArticleStatusController extends Controller
+class ChangeStatusAtArticleController extends Controller
 {
     /**
      * Handle the incoming request.

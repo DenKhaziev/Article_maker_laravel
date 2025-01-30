@@ -37,7 +37,7 @@ class ArticlePolicy
      */
     public function update(User $user, Article $article): bool
     {
-        return $user->id === $article->user_id;
+        return $user->role === User::ROLE_ADMIN || $user->id === $article->user_id;
 
     }
 
@@ -46,7 +46,7 @@ class ArticlePolicy
      */
     public function delete(User $user, Article $article): bool
     {
-        return false;
+        return $user->role === User::ROLE_ADMIN || $user->id === $article->user_id;
     }
 
     /**
