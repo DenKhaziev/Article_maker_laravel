@@ -34,7 +34,6 @@ class IndexController extends Controller
 
         return view('index', [
             'articlesInView' => $articleQuery->paginate(10),
-//            'isAdmin' => ResourceService::isAdmin(),
             'categories' => $categories,
         ]);
     }
