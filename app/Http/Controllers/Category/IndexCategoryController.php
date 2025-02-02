@@ -18,7 +18,7 @@ class IndexCategoryController extends Controller
         $categories = Category::get();
         return view('categories.index', [
             'categoriesInView' => $categories,
-            'isAdmin' => (new ResourceService)->isAdmin()
+//            'isAdmin' => ResourceService::isAdmin(),
         ]);
     }
 }

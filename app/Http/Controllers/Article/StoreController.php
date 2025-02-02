@@ -16,8 +16,6 @@ class StoreController extends Controller
     {
         $data = $storeRequest->validated();
         Article::createWithUserAndCategory($data);
-        return redirect(route('index', [
-            'filter' => $request->has('filter') ? $request->filter : null
-        ]));
+        return redirect(route('index'));
     }
 }

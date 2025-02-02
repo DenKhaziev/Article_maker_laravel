@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Category;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,8 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('article_name');
             $table->string('article_description');
-            $table->integer('category_id')->nullable();
-            $table->integer('user_id')->nullable();
+//            $table->foreignId('category_id')->nullable();
+            $table->foreignIdFor(Category::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+//            $table->foreignId('user_id')->nullable();
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->integer('views')->default(0);
             $table->boolean('status')->default(true);
             $table->string('image')->nullable();

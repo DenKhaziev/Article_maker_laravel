@@ -64,4 +64,9 @@ class ArticlePolicy
     {
         return false;
     }
+    public function filter (User $user): bool
+    {
+        return (int) $user->role === User::ROLE_ADMIN;
+
+    }
 }

@@ -15,7 +15,6 @@ class Article extends Model
 
     public function category(): BelongsTo
     {
-//        return $this->belongsTo('App\Models\Category');
         return $this->belongsTo(Category::class);
     }
 
@@ -30,5 +29,7 @@ class Article extends Model
         $data['image'] = Storage::disk('local')->put('images', $data['image']);
         $this->update($data);
     }
+
+
 
 }

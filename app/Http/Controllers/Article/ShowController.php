@@ -18,7 +18,7 @@ class ShowController extends Controller
         $article->update(['views' => ++$article->views]);
         return view('articles.show',[
             'articlesInView' => $article,
-            'isAdmin' => (new ResourceService)->isAdmin()
+//            'isAdmin' => (new ResourceService)->isAdmin()
         ]);
     }
 }

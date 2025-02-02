@@ -9,27 +9,36 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ResourceService
 {
-    public $user;
-    public $query;
+//    public $user;
+//    public $query;
 
-    public function __construct()
-    {
-        $this->user = Auth::user();
-        $this->query = Article::query();
-    }
+//    public function __construct()
+//    {
+//        $this->user = Auth::user();
+//        $this->query = Article::query();
+//    }
 
-    public function articlesFilter ( $request) {
+    static function articlesFilter ( $request) {
+
+        $user = Auth::user();
+        $query = Article::query();
 
         // Если нажата кнопка фильтрации и пользователь залогинен
-        if ($request->has('filter') && $request->filter === 'my_posts' && $this->user) {
-           $this->query->where('user_id', $this->user->id);
+        if ($request->has('filter') && $request->filter === 'my_posts' && $user) {
+           $query->where('user_id', $user->id);
         }
-        $articles = $this->query->paginate(10);
+//        if ($request->filled('user_id')) {
+//            $query->where('user_id', $request->user_id);
+//        }
+        $articles = response()->json($query->paginate(10));
         $filteredArticles = $request->has('filter') && $request->filter === 'my_posts';
         return [$articles, $filteredArticles];
     }
-    public function isAdmin() {
-        $isAdmin = User::get()->pluck('role')->first() == User::ROLE_ADMIN;
-        return $isAdmin;
-    }
+//    static function isAdmin() {
+////        $isAdmin = User::get()->pluck('role')->first() == User::ROLE_ADMIN;
+////        $isAdmin = User::getRoles()[2];
+////        $isAdmin = User::class->isAdmin();
+//
+//        return $isAdmin;
+//    }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Article\DestroyController;
 use App\Http\Controllers\Article\EditController;
 use App\Http\Controllers\Article\IndexController;
 use App\Http\Controllers\Article\ShowController;
+use App\Http\Controllers\Article\StoreController;
 use App\Http\Controllers\Article\UpdateController;
 use App\Http\Controllers\Category\CreateCategoryController;
 use App\Http\Controllers\Category\DestroyCategoryController;
@@ -26,7 +27,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/articles/{article}', ShowController::class)->name('articles.show');
         Route::get('/create/articles', CreateController::class)->name('articles.create');
         Route::get('/articles/{article}/edit', EditController::class)->name('articles.edit');
-        Route::post('/articles', StoreCategoryAtArticleController::class)->name('articles.store');
+        Route::post('/articles', StoreController::class)->name('articles.store');
         //route update не видит путь без приставки update в конце пути, не знаю почему!
         Route::patch('/articles/{article}/update', UpdateController::class)->name('articles.update');
         Route::delete('/articles/{article}', DestroyController::class)->name('articles.destroy');

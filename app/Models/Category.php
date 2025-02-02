@@ -12,7 +12,6 @@ class Category extends Model
     use HasFactory;
     public function articles(): HasMany
     {
-//        return $this->belongsTo('App\Models\Category');
         return $this->hasMany(Article::class);
     }
 }
